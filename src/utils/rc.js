@@ -2,7 +2,7 @@ import { promisify } from 'util'
 import fs from 'fs'
 import chalk from 'chalk'
 import { decode, encode } from 'ini'
-import inquirer from 'inquirer'
+// import inquirer from 'inquirer'
 
 import { RC, DEFAULTS } from './constants'
 
@@ -21,21 +21,20 @@ export const fsStat = async (path, capture = true) => {
   }
 }
 
-export const getAll = async () => {
-  const statRes = await fsStat(RC)
+export const getConfig = async () => {
+  const statRes = await fsStat(RC, false)
   let opts
-  console.log('getAll----', getAll)
   if (statRes) {
     opts = await readFile(RC, 'utf8')
     console.log('file object', opts)
-    // opts = decode(opts)
+    opts = decode(opts)
     return opts
   }
 
   return {}
 }
 
-// registry vuejs-templates
+// registry
 export const setConfig = async (key, value) => {
   const rcOption = await fsStat(RC, false)
   let opts
@@ -56,4 +55,5 @@ export const setConfig = async (key, value) => {
     opts = Object.assign(DEFAULTS, key && value ? { [key]: value } : {})
   }
   await writeFile(RC, encode(opts), 'utf8')
+  console.log('创建配置文件成功')
 }

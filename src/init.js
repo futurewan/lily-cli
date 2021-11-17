@@ -4,7 +4,7 @@ import inquirer from 'inquirer'
 import chalk from 'chalk'
 import symbol from 'log-symbols'
 import { downloadLocal } from './utils/download'
-import { getAll, setConfig } from './utils/rc'
+import { getConfig, setConfig } from './utils/rc'
 
 const createProject = (projectName) => {
   if (!fs.existsSync(projectName)) {
@@ -24,7 +24,7 @@ const createProject = (projectName) => {
         message: '请输入作者名'
       }
     ]).then((answer) => {
-      console.log('answer', answer)
+      console.log('answer', answer, projectName)
       const { templateName, description, author } = answer
       const loading = ora('downloading template ...')
       loading.start()
@@ -55,8 +55,7 @@ const createProject = (projectName) => {
 
 // 初始化工程
 const init = async (projectName) => {
-  const config = await getAll() || {}
-  console.log('config', config)
+  const config = await getConfig() || {}
 
   // 未配置仓库地址
   if (!config.registry) {
@@ -66,7 +65,6 @@ const init = async (projectName) => {
       type: 'confirm'
     }]).then(async (answer) => {
       const { isCreate } = answer
-      console.log('isCreate', isCreate)
       // 使用默认配置
       if (isCreate) {
         await setConfig()
@@ -75,12 +73,13 @@ const init = async (projectName) => {
         inquirer.prompt([{
           name: 'registry',
           message: '请输入仓库名称'
-        }]).then((config) => {
+        }]).then(async (config) => {
           const { registry } = config
           if (registry) {
-            setConfig('registry', registry)
+            await setConfig('registry', registry)
+            createProject(projectName)
           } else {
-            console.log('退出创建')
+            console.log('退出创建配置文件')
           }
         })
       }

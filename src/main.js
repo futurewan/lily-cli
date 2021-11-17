@@ -12,7 +12,7 @@ const actionMap = {
   init: {
     description: 'generate a new project from a template',
     usages: [
-      'lily-cli init <projectName>'
+      'lily-create-cli init <projectName>'
     ]
   }
 }
