@@ -1,15 +1,18 @@
+'use strict'
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true
+  "extends": ["eslint:recommended"],
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "node": true,
+    "es6": true
   },
-  extends: [
-    'standard'
-  ],
-  parserOptions: {
-    ecmaVersion: 12,
-    sourceType: 'module'
+  "parserOptions": {
+    "ecmaVersion": 2018
   },
-  rules: {
+  "rules": {
+    "no-console": "off",
+    "strict": ["error", "global"],
+    "curly": "warn"
   }
 }

@@ -1,8 +1,22 @@
 # 前端脚手架工具
+用于生成前端基础工程项目（react版），脚手架包含webpack相关配置，零配置即可启动项目
+## 安装
+```shell
+npm i -g lilyrc-cli
+```
 
 ## 使用
-lily-create-cli init `<projectName>`
+### 初始化项目
+```shell
+lily init <project-name>
+```
+### 启动开发环境
+```shell
+lily start
+```
+### 打包
+```shell
+lily build
+```
 
-`<projectName>`替换为项目名称
-
-第一次会在用户目录新建.lilyrc文件，用来配置仓库信息
+未完待续...
